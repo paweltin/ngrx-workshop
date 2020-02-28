@@ -1,6 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Item} from '../item';
 import {ItemsService} from '../items.service';
+import {select, Store} from '@ngrx/store';
+import {ItemsState} from '../state/reducers/items.reducer';
+import * as itemsActions from '../state/actions/items.actions';
+import * as itemsSelectors from '../state/selectors/items.selectors';
 
 @Component({
   selector: 'app-items',
@@ -13,10 +17,14 @@ export class ItemsComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<Item[]>();
   itemsSelected: Item[] = [];
 
-  constructor(private itemsService: ItemsService) { }
+  constructor(private store: Store<ItemsState>) { }
 
   ngOnInit() {
-    this.itemsService.getItems().subscribe(items => this.items = items);
+    this.store.dispatch(new itemsActions.LoadItems());
+
+    this.store.pipe(select(itemsSelectors.getItems)).subscribe(
+      items => this.items = items
+    );
   }
 
   updateSelected($event): void {
