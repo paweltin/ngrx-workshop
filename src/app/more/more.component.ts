@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {ItemsService} from '../items/items.service';
 import {Item} from '../items/item';
+import {ItemsState} from '../items/state/reducers/items.reducer';
+import {Store} from '@ngrx/store';
+import {LoadMoreItems} from '../items/state/actions/items.actions';
 
 @Component({
   selector: 'app-more',
@@ -10,11 +12,11 @@ import {Item} from '../items/item';
 export class MoreComponent {
   @Output() clicked = new EventEmitter<Item[]>();
 
-  constructor(private itemsService: ItemsService) {
+  constructor(private store: Store<ItemsState>) {
   }
 
   onClick(): void {
-    this.itemsService.getMoreItems().subscribe(items => this.clicked.emit(items));
+    this.store.dispatch(new LoadMoreItems());
   }
 
 }

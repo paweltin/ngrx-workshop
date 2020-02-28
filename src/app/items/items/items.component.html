@@ -1,10 +1,11 @@
 <form>
-  <label *ngFor="let item of items; index as i">
+  <label *ngFor="let item of items$ | async; index as i">
     <input type="checkbox" (change)="updateSelected($event)" name="item_{{i}}"
            [attr.data-id]="item.id"
-           [attr.data-value]="item.value"/>
+           [attr.data-value]="item.value"
+           [checked]="item.selected"/>
     {{item.value}}
   </label>
 
-  <app-more (clicked)="onClicked($event)"></app-more>
+  <app-more></app-more>
 </form>

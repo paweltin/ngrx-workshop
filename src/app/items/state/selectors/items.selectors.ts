@@ -9,3 +9,13 @@ export const getItems = createSelector(
   selectItemsState,
   state => state.items
 );
+
+export const getSelectedItems = createSelector(
+  selectItemsState,
+  state => state.items.filter(item => item.selected)
+);
+
+export const getSelectedItemsCount = createSelector(
+  selectItemsState,
+  state => state.items.filter(item => item.selected).length
+);

@@ -19,6 +19,14 @@ export class ItemsEffects {
     ))
   );
 
+  @Effect()
+  loadMoreItems$ = this.actions$.pipe(
+    ofType(itemsActions.ItemsActionTypes.LoadMoreItems),
+    concatMap(() => this.itemsService.getMoreItems().pipe(
+      map((items: Item[]) => new itemsActions.SetMoreItems(items))
+    ))
+  );
+
 
   constructor(private actions$: Actions<itemsActions.ItemsActions>, private itemsService: ItemsService) {
   }

@@ -1,5 +1,5 @@
 <p>Selected items:
-<span *ngFor="let item of selectedItems">
+<span *ngFor="let item of selectedItems$ | async">
   | {{item.value}} |
 </span>
 </p>

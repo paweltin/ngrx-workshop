@@ -1,5 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {Item} from 'src/app/items/item';
+import {Component, OnInit} from '@angular/core';
+import {select, Store} from '@ngrx/store';
+import {ItemsState} from '../../items/state/reducers/items.reducer';
+import {getSelectedItems} from '../../items/state/selectors/items.selectors';
+import {Observable} from 'rxjs';
+import {Item} from '../../items/item';
 
 @Component({
   selector: 'app-footer',
@@ -7,13 +11,15 @@ import {Item} from 'src/app/items/item';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
+  selectedItems$: Observable<Item[]>;
 
-  @Input() selectedItems: Item[] = [{id: -1, value: '--none--'}];
-
-  constructor() {
+  constructor(private store: Store<ItemsState>) {
   }
 
   ngOnInit() {
+    this.selectedItems$ = this.store.pipe(
+      select(getSelectedItems),
+    );
   }
 
 }
