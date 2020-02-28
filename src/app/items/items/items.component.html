@@ -1,0 +1,10 @@
+<form>
+  <label *ngFor="let item of items; index as i">
+    <input type="checkbox" (change)="updateSelected($event)" name="item_{{i}}"
+           [attr.data-id]="item.id"
+           [attr.data-value]="item.value"/>
+    {{item.value}}
+  </label>
+
+  <app-more (clicked)="onClicked($event)"></app-more>
+</form>
